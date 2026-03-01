@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>Hospital Login</h2>
+
+        <form id="loginForm">
+            <input type="text" id="phone" placeholder="Phone Number" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    fetch("/api/hospital_login", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            phone: document.getElementById("phone").value,
+            password: document.getElementById("password").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.message){
+            alert(data.message);
+            window.location.href = "/hospital_dashboard";
+        } else {
+            alert(data.error);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

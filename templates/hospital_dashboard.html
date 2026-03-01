@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <h2>🩸 Blood SOS Request</h2>
+
+    <form action="/sos" method="POST">
+        <input type="text" name="patient_name" placeholder="Patient Name" required>
+
+        <select name="blood_group" required>
+            <option value="">Select Blood Group</option>
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+        </select>
+
+        <button type="submit"> SOS</button>
+    </form>
+
+    <hr>
+
+    {% if donors %}
+        <h3> Nearby Donors (Within 5 KM)</h3>
+        <ul>
+            {% for donor in donors %}
+                <li>
+                    <strong>{{ donor.name }}</strong> <br>
+                    <i class="fa-solid fa-phone"></i> {{ donor.phone }} <br>
+                    <i class="fa-solid fa-location-dot"></i> {{ donor.distance }} KM away
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No donors found within 5 KM.</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Donor Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>Donor Registration</h2>
+
+        <form id="donorForm">
+            <input type="text" id="name" placeholder="Donor Name" required>
+            <input type="text" id="phone" placeholder="Contact Number" required>
+
+            <select id="blood_group" required>
+                <option value="">Select Blood Group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+            </select>
+
+            <input type="hidden" id="lat">
+            <input type="hidden" id="lng">
+
+            <button type="button" onclick="getLocation('lat','lng')" class="btn-secondary">
+                Get Location
+            </button>
+
+            <button type="submit" class="btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+document.getElementById("donorForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    fetch("/api/register_donor", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            name: document.getElementById("name").value,
+            phone: document.getElementById("phone").value,
+            blood_group: document.getElementById("blood_group").value,
+            lat: document.getElementById("lat").value,
+            lng: document.getElementById("lng").value
+        })
+    })
+    .then(res => res.json())
+    .then(data => alert(data.message));
+});
+</script>
+
+</body>
+</html>

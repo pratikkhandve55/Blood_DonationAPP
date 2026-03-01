@@ -17,7 +17,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# DATABASE MODELS
+# DATABASE
 
 class Hospital(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -37,9 +37,7 @@ class Donor(db.Model):
     lng = db.Column(db.Float)
 
 
-# =====================
-# ROUTES (PAGES)
-# =====================
+# ROUTES 
 
 @app.route("/")
 def home():
@@ -82,10 +80,8 @@ def calculate_distance(lat1, lon1, lat2, lon2):
 
     distance = R * c
     return distance
-#  
-# =====================
+
 # API ROUTES
-# =====================
 
 
 @app.route("/api/register_hospital", methods=["POST"])
